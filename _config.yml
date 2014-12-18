@@ -25,3 +25,4 @@ pages_list:
 # turn on recognition of github flavored markdown
 markdown: redcarpet
 
+excerpt_separator: <!--more-->

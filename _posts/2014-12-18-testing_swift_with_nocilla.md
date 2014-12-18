@@ -4,15 +4,15 @@ title: HTTP testing in Swift with Nocilla
 permalink: http-testing-in-swift-with-nocilla
 comments: true
 ---
-
-## Intro
 In this post you'll learn about:
 
-- testing network layer with Nocilla and XCTest,
+- testing networking layer with Nocilla and XCTest,
 - using Objective-C libraries with Swift,
 - new XCTest asynchronous testing API,
 - CocoaPods,
 - basics of test naming and structure.
+
+<!--more-->
 
 ## Testing networking code
 There are a few problems with unit testing the networking layer:
@@ -46,27 +46,27 @@ end
 I've created NocillaTestCase deriving from XCTest case, to encapsulate all the setup that's needed to be done when testing with Nocilla. Class methods setUp and tearDown make sure the library is stubbing only during this test suit:
 
 ```swift
-    override class func setUp() {
-        super.setUp()
-        LSNocilla.sharedInstance().start()
-    }
+override class func setUp() {
+    super.setUp()
+    LSNocilla.sharedInstance().start()
+}
 
-    override class func tearDown() {
-        super.tearDown()
-        LSNocilla.sharedInstance().stop()
-    }
+override class func tearDown() {
+    super.tearDown()
+    LSNocilla.sharedInstance().stop()
+}
 ```
 
 Stubs get cleared between tests of the suite.
 
 ```swift
-    override func tearDown() {
-    	// ...
-        LSNocilla.sharedInstance().clearStubs()
-    }
+override func tearDown() {
+    // ...
+    LSNocilla.sharedInstance().clearStubs()
+}
 ```
 
-Due to the fact that "NSURLSession API is highly asynchronous" we need to use the new XCTest API and setup an expectaction before each test. Expectaction signals that there's async code to be executed. At the end of the test call waitForExpectationsWithTimeout, so the function won't return and execute next test. It waits until expectaction is fullfiled (you need to call it manualy on async code completion) or if it times out. When running tests with Nocilla, timeout can be set to very low values (under 0.1). Even if it fails it's still faster than running a network call - response is almost immediate.
+Due to the fact that "NSURLSession API is highly asynchronous" we need to use the new XCTest API and setup an expectaction before each test. Expectaction signals that there's async code to be executed. At the end of the test call `waitForExpectationsWithTimeout`, so the function won't return and execute next test. It waits until expectaction is fullfiled (you need to call it manualy on async code completion) or if it times out. When running tests with Nocilla, timeout can be set to very low values (under 0.1). Even if it fails it's still faster than running a network call - response is almost immediate.
 Add it at the end of the test:
 
 ```swift
@@ -109,7 +109,7 @@ or testing malformed JSON data reponse:
 stubRequest("GET", baseURLString).andReturn(200).withBody("{1}")
 ```
 
-There are many more examples of stubbing requests with Nocilla's elegant DSL on [github](https://github.com/luisobo/Nocilla#stubbing-requests). Those include even responding with data recorded with curl and failing requests with specific NSError.
+There are many more examples of stubbing requests with Nocilla's elegant DSL on [github](https://github.com/luisobo/Nocilla#stubbing-requests). Those include even responding with data recorded with curl and failing requests with specific `NSError`.
 
 ## Tests Structure and Naming
 Notice the Arrange-Act-Assert pattern that helps to keep tests clean. In Arrange all needed objects/dependencies are set up, then method under test is invoked (Act) and finally we assert results/the state of the system under test (Assert). More details about the pattern [here](http://www.arrangeactassert.com/why-and-what-is-arrange-act-assert/). Another thing worth noting is the omition of the assertion message. I've used following standard for naming unit test ([more](http://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html) [details](http://osherove.com/blog/2012/5/15/test-naming-conventions-with-unit-of-work.html)):
