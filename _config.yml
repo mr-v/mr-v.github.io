@@ -4,7 +4,7 @@ relative_permalinks: true
 
 # Setup
 title:            Adventures in Swift
-tagline:          Unit testing and clean code exploration
+tagline:          Unit Testing and Clean Code Exploration
 url:              https://mr-v.github.io
 paginate:         1
 baseurl:          /
@@ -21,3 +21,7 @@ pages_list:
   About: '/about'
   Feed: '/atom.xml'
 #  Archive: '/archive'
+
+# turn on recognition of github flavored markdown
+markdown: redcarpet
+
