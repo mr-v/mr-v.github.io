@@ -2,6 +2,20 @@
   <meta charset="UTF-8">
   <link href="http://gmpg.org/xfn/11" rel="profile">
 
+  <!-- JS -->
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/bigfoot.min.js"></script>
+  <script>
+//    $.bigfoot();
+   var bigfoot = $.bigfoot(
+   {
+     actionOriginalFN: "ignore",
+     positionContent: "true"
+   }
+   );
+ </script>
+
+
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
@@ -16,6 +30,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}public/css/poole.css">
   <link rel="stylesheet" href="{{ site.baseurl }}public/css/syntax.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}public/css/bigfoot-number.css">
 
   <!-- Icons -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}public/apple-touch-icon-precomposed.png">

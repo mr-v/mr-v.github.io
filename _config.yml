@@ -1,3 +1,5 @@
+markdown: redcarpet
+
 # Permalinks
 permalink:        pretty
 relative_permalinks: true
@@ -6,7 +8,7 @@ relative_permalinks: true
 title:            Adventures in Swift
 tagline:          Unit Testing and Clean Code Exploration
 url:              https://mr-v.github.io
-paginate:         1
+paginate:         5
 baseurl:          /
 author:
   name:           Witold Skibniewski
@@ -21,8 +23,5 @@ pages_list:
   About: '/about'
   Feed: '/atom.xml'
 #  Archive: '/archive'
-
-# turn on recognition of github flavored markdown
-markdown: redcarpet
 
 excerpt_separator: <!--more-->

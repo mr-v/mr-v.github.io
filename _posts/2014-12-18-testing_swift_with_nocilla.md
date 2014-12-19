@@ -75,7 +75,9 @@ waitForExpectationsWithTimeout(0.1, handler: nil)
 
 Passing nil to handler is enough for tests to fail in case of timeout. If you need to do any additional work in handler, be sure to check if hadnlers error parameter is non nil and call XCTFail assertion, as it's invoked both on expectaction fullfilment and timeout.
 
-As each test in a suite will use asynchronous API NocillaTests create new expectaction in setUp instance method and clean it up in the tearDown. Note: to avoid creating initializer[1] expectaction is declared as an explicitly unwrapped XCTestExpectation.
+As each test in a suite will use asynchronous API NocillaTests create new expectaction in setUp instance method and clean it up in the tearDown. Note: to avoid creating initializer <sup id="fnref:1">
+        <a href="#fn:1" rel="footnote">1</a>
+    </sup> expectaction is declared as an explicitly unwrapped XCTestExpectation.
 
 ## Testing HTTP requests with Nocilla
 After this whole setup (which more or less you'll need to do only once)  we're ready to write first tests! 
@@ -117,6 +119,10 @@ Notice the Arrange-Act-Assert pattern that helps to keep tests clean. In Arrange
 
 
 ***
-[1] which would be impossible anyway as XCTestCase default initializer takes in NSInvocation, which is "unavailable"
-[TODO: biggfootnote]
+
+<div class="footnotes"><ol>
+    <li class="footnote" id="fn:1">
+        <p>Which would be impossible anyway as XCTestCase default initializer takes in NSInvocation, which is "unavailable".<a href="#fnref:1" title="return to article"> ↩</a><p>
+    </li>
+</ol></div>
 
