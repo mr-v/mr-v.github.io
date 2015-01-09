@@ -19,7 +19,7 @@ There are a few problems with unit testing the networking layer:
 
 - Results are not 100% reliable (tests may fail due to a number of factors - bad connection, server downtime, etc.).
 - Test are slow - any external dependencies (networking, disk access, etc.) cause tests to be slower, than when they would run solely in-memory.
-- It may be also hard to setup and test specific conditions, especially if you want to check something other than the "happy path" ("Does this error handling code works like it supposed to?").
+- It may be also hard to setup and test specific conditions, especially if you want to check something other than the "happy path" ("Does this error handling code works like it's supposed to?").
 
 Solution to this is to stub networking, to mitigate the need to hit the network or having a working server. Nocilla is a library that stubs HTTP requests and responses. It has great API with custom DSL that allows to fluently compose the stubs. It's written in Objective-C, but due to Swift - Objective-C interoperability it's possible to use it for tests in Swift projects. Easiest way to integrate a third party dependency in a project is with CocoaPods.
 
