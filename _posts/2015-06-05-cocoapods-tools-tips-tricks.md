@@ -6,7 +6,7 @@ comments: true
 ---
 In the spirit of [Ash Furrow's Teaching & Learning](http://ashfurrow.com/blog/teaching-learning/), here's a compilation of CocoaPods pointers I've picked up after maintaining private pods daily.
  
-## Use private spec repo
+## Using private spec repo
 It's something to consider, even if you don't maintain private pods, in the following situations:
 
 - using _bleeding edge_ version of the library, that isn't deemed stable yet (not tagged, no podspec for this version yet),
