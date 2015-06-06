@@ -49,7 +49,7 @@ Using closure syntax goodness you can end up with a simplified call that looks l
 tryWithErrorPointer { methodWithParameter(parameter: parameter, error: $0) }
 ```
 
-where `$0` is a shorthand argument name for the `NSErrorPointer`. OK, that pesky `error` variable is gone, but what about handling success and error? There's a simple DSL that allows you to chain handling of both cases. You can omit any of them as you wish ([example from demo app](https://github.com/mr-v/swift-objc.io-issue-10-core-data-network-application/commit/d881a79126957079c5099efc32ddafd9d10427a1#diff-d11b34ffbe4581d0b14763b5b452fae3L26)).
+where `$0` is a shorthand argument name for the `NSErrorPointer`. OK, that pesky `error` variable is gone, but what about handling success and error? You can nicely chain handling of both cases. You can omit any of the handlers as you wish ([example from demo app](https://github.com/mr-v/swift-objc.io-issue-10-core-data-network-application/commit/d881a79126957079c5099efc32ddafd9d10427a1#diff-d11b34ffbe4581d0b14763b5b452fae3L26)).
 
 ```swift
 tryWithErrorPointer { methodWithParameter(parameter: parameter, error: $0) }
