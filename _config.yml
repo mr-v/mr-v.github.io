@@ -5,7 +5,7 @@ permalink:        pretty
 relative_permalinks: true
 
 # Setup
-title:            Adventures in Swift
+title:            Adventures in iOS Development
 tagline:          Unit Testing and Clean Code Exploration
 url:              https://mr-v.github.io
 paginate:         5
