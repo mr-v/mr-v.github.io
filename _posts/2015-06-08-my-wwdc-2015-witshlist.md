@@ -1,5 +1,9 @@
-# My WWDC 2015 Wishlist
-
+---
+layout: post
+title: My WWDC 2015 Wishlist
+permalink: my-wwdc-2015-wishlist
+comments: true
+---
 WWDC is about to start in 9 hours. Here's my modest wishlist:
 
 - stable tools and iOS - I know, boring,
