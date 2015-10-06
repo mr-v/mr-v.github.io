@@ -24,6 +24,6 @@ github:
 pages_list:
   About: '/about'
   Feed: '/atom.xml'
-#  Archive: '/archive'
+  Archive: '/archive'
 
 excerpt_separator: <!--more-->
