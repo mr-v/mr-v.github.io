@@ -8,6 +8,8 @@ comments: true
 Automated tests save time and give confidence when refactoring code.
 How one would go about starting writing tests in Swift? There's a bunch of ways to do unit testing, different styles (TDD, BDD), different matchers. Before delving into any of this, let's make sure our testing setup is up to date with Swift 2/Xcode 7 capabilities.
 
+<!--more-->
+
 ## Testing Internal Methods
 
 For the first year of Swift developers were using different workarounds to test internal methods:

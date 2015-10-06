@@ -13,7 +13,17 @@ title: Home
     </h1>
 
     <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
-    {{ post.content | split: '<!--more-->' | first }}
+      {{ post.excerpt }} 
+    {% capture content_words %} 
+      {{ post.content | number_of_words }} 
+    {% endcapture %} 
+    {% capture excerpt_words %} 
+      {{ post.excerpt | number_of_words }} 
+    {% endcapture %} 
+    {% if excerpt_words != content_words %}
+    <a href="{{ post.url }}"><strong>Read more</strong></a>      
+          {% endif %}
+
   </article>
   {% endfor %}
 </div>
@@ -34,3 +44,5 @@ title: Home
     <span class="pagination-item newer">Newer</span>
   {% endif %}
 </div>
+
+

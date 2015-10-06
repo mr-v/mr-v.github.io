@@ -5,7 +5,9 @@ permalink: lldb-debugging-views-with-private-apis-in-swift
 comments: true
 ---
 
-Some of the private APIs, that are useful for debugging:
+Quick overview of some of the view debugging private APIs in the SDK and how to use them with Swift.
+
+<!--more-->
 
 - `+[UIViewController _printHierarchy]` - prints view controller hierarchy:
 

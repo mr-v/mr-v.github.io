@@ -7,6 +7,8 @@ comments: true
 
 Wtih Swift 2 now official, it's good time to give migration from 1.2 a go. It can be longer-than-expected process - automatic updater can only get you so far. Instead of whining about it, I'll go over some of the smaller features that don't get as much spotlight as others.
 
+<!--more-->
+
 ## forEach
 Standard library has now `forEach` available for `SequenceType`. Own implementations and hacky use of `map` be gone! Combine this with information about types in collections added to the SDK and we can go from somewhat clunky `deselectCells` implementation:
 
