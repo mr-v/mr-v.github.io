@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Migrating to Swift 2.0
+title: Migrating to Swift 2.0 - It's The Little Things
 permalink: migrating-to-swift-2
 comments: true
 ---
@@ -95,7 +95,7 @@ func action() {
 
 ### NS_OPTION updates
 
-Foundation's `NS_OPTION` representation in Swift changed from `RawOptionSetType` to `OptionSetType`. Options are now passed as array of values, instead of using `|` binary operator of C heritage.
+Foundation's `NS_OPTION` representation in Swift changed from `RawOptionSetType` to `OptionSetType`. It impements `ArrayLiteralConvertible` protocol, so options can be nicely passed using array literal, instead of using `|` binary operator of C heritage.
 
 ```swift
 // 1.2
