@@ -28,7 +28,7 @@ Now all internal entities of `AwardWinningApp` module are available inside test 
 
 ## Speeding Up Tests
 
-When running tests inside of "host application", it's a good practice to stop usual app initialization. We're unit testing here, no need to run the full app with authentication, networking and building up views. One way of fixing this is putting early returns inside of app delegate. Thought that there must be a better way do this. Searching lead me to Jon Reid's ["How to Easily Switch Your App Delegate for Testing"](http://qualitycoding.org/app-delegate-for-tests/) blog post. In there he recommends to switch out app delegate in `main` function. Instead of default delegate, use one provided by the test target. `TestingAppDelegate` is just a stub that does nothing. This way replacement is done at the earliest possible moment, no additional checks or hacks required.
+When running tests inside of "host application", it's a good practice to stop usual app initialization. We're unit testing here, no need to run the full app with authentication, networking and building up views. One way of fixing this is to put early returns in the app delegate. Thought that there must be a better way do this. Searching lead me to Jon Reid's ["How to Easily Switch Your App Delegate for Testing"](http://qualitycoding.org/app-delegate-for-tests/) blog post. In there he recommends to switch out app delegate in `main` function. Instead of default delegate, use one provided by the test target. `TestingAppDelegate` is just a stub that does nothing. This way replacement is done at the earliest possible moment, no additional checks or hacks required.
 
 But that's Objective-C, how to do this in Swift? In the comments Paul Booth shared his solution:
 
