@@ -14,10 +14,10 @@ How one would go about starting writing tests in Swift? There's a bunch of ways 
 
 For the first year of Swift developers were using different workarounds to test internal methods:
 
-- Adding file under test to the test target itself. Ugh, that's one more thing to remember about and manage. We don't want to do this, just compile once and use it.
+- Adding file under test to the test target itself. Ugh, that's one more thing to remember and manage. We don't want to do this, just compile once and use it.
 - Adding `public` access modifier to make methods visible to other modules. Well, that changes the original intent altogether, so it's also a no-no.
 
-With Swift 2 this was solved by introducing `@testable` attribute. To use it, app target needs testability enabled, see `app target -> Build Settings -> Build Options -> Enable Testability`. In projects created with Xcode 7 this is enabled by default. Double check `Product Module Name` and use it to import app target in test case:
+With Swift 2 this was solved by introducing `@testable` attribute. To be able to use it, app target needs testability enabled, see `App Target -> Build Settings -> Build Options -> Enable Testability`. In projects created with Xcode 7 it's on by default. Double check `Product Module Name` and use it to import app target in test case:
 
 ```swift
 @testable import AwardWinningApp
@@ -28,8 +28,9 @@ Now all internal entities of `AwardWinningApp` module are available inside test 
 
 ## Speeding Up Tests
 
-When test target runs inside of "host application", it's a good practice to stop any normal app execution. We're unit testing here, no need to run the full app with authentication, networking and building up views. Thought that there must be a better way to fix this, than putting early returns inside of app delegate. This lead me to Jon Reid's ["How to Easily Switch Your App Delegate for Testing"](http://qualitycoding.org/app-delegate-for-tests/) blog post. In there he recommends to switch out app delegate in `main` function to one provided by the test target. Test app delegate is just a stub that does nothing. That's pretty cool - replacement is done at the earliest possible moment, no additional checks or hacks required. But that's Objective-C, how to do this in Swift?
-In the comments Paul Booth shared his solution:
+When running tests inside of "host application", it's a good practice to stop usual app initialization. We're unit testing here, no need to run the full app with authentication, networking and building up views. One way of fixing this is putting early returns inside of app delegate. Thought that there must be a better way do this. Searching lead me to Jon Reid's ["How to Easily Switch Your App Delegate for Testing"](http://qualitycoding.org/app-delegate-for-tests/) blog post. In there he recommends to switch out app delegate in `main` function. Instead of default delegate, use one provided by the test target. `TestingAppDelegate` is just a stub that does nothing. This way replacement is done at the earliest possible moment, no additional checks or hacks required.
+
+But that's Objective-C, how to do this in Swift? In the comments Paul Booth shared his solution:
 
 > Comment out @UIApplicationMain in AppDelegate.swift
 
@@ -54,7 +55,7 @@ if isRunningTests {
 }
 ```
 
-That's Xcode 6.4/Swift 1.2. We're getting closer. But whoah, `main.swift`?! Well _of course_, see _Swift Programming Language_ book from Apple:
+That works in Xcode 6.4/Swift 1.2. We're getting closer. But whoah, what's this `main.swift`?! _Swift Programming Language_ answers this:
 
 >  UIApplicationMain
 
@@ -62,7 +63,7 @@ That's Xcode 6.4/Swift 1.2. We're getting closer. But whoah, `main.swift`?! Well
 
 > If you do not use this attribute, supply a main.swift file with a main function that calls the UIApplicationMain(_:_:_:) function. 
 
-In Xcode 7 some things got moved around and test target module is not loaded when `UIApplicationMain` gets called. Using `NSStringFromClass` is a no go in this case. But do we actually need to provide this stub delegate?  Turns out we can just pass `nil`. To see whether tests are running performing `nil` check against  `NSClassFromString("XCTestCase")` will do. As of now this check doesn't clash with Xcode's UI Testing target: during UI tests `UIApplicationMain` is called when `XCTest` framework is not yet loaded. Though, as seen above, it may change.
+In Xcode 7 some things got moved around and test target module is not loaded when `UIApplicationMain` gets called. Using `NSStringFromClass` to instantiate `TestingAppDelegate` is a no go in this case. But do we actually need to provide this stub delegate?  Turns out we can just pass `nil`. Checking for `XCTestCase` class presence is good enough way of veryfing whether tests are running. As of now this doesn't clash with Xcode's UI Testing target: during UI tests `UIApplicationMain` is called when `XCTest` framework is not yet loaded. Though it may change, as seen above.
 
 With those changes and Swift 2 updates, I've arrived at bare minimum implementation for stubbing app delegate for tests:
 

@@ -20,11 +20,11 @@ Quick overview of some of the view debugging private APIs in the SDK and how to 
    |    | <SettingsViewController 0x7ffb02d4ccc0>, state: disappeared, view:  (view not loaded)
 ```
 
-- `-[UIView recursiveDescription]` - prints view hierarchy. Note that it may be more convenient to use Xcode's visual debugger for going over views structure.
+- `-[UIView recursiveDescription]` - prints view hierarchy. Note that nowadays it may be more convenient to use Xcode's visual debugger for going over views structure.
 - `-[UIView _autolayoutTrace]` - prints view hierarchy for the whole app with hints about ambiguous layout
-- `-[UIView _recursiveAutolayoutTraceAtLevel:]` - prints hierarchy with hints only for the specified view. Just use `0` for paramater, it determines level of indendation.
+- `-[UIView _recursiveAutolayoutTraceAtLevel:]` - prints hierarchy with hints only for the specified view. Just use `0` for paramater, it only determines level of indendation.
 
-When breaking inside Swift code, we're relying on its compiler to parse expression. Using Objective-C syntax won't fly.
+When breaking inside Swift code, we're relying on Swift compiler to parse expression. Using Objective-C syntax won't fly.
 
 ```objc
 (lldb) po [UIViewController _printHierarchy]
@@ -48,13 +48,11 @@ The method is there, but LLDB needs to be informed to use Clang to get to it. Th
 expression -l objc++ -O -- [UIViewController _printHierarchy]
 ```
 
-Writing `expression -l objc++ -O --` each time we want to use SDK's private API is no fun <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. Just add an alias to `~/.lldbinit` file:
+Writing `expression -l objc++ -O --` each time we want to use SDK's private API is no fun <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. To save keystrokes add an alias to `~/.lldbinit` file:
 
 `command alias spo expr -l objc++ -O --`
 
-To reload `lldbinit` without restarting Xcode execute :
-
-`command source ~/.lldbinit`.
+To reload `lldbinit` without restarting Xcode execute : `command source ~/.lldbinit`.
 
 Quick test inside Swift frame confirms that everything works.
 

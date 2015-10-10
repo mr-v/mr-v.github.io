@@ -36,7 +36,7 @@ For such small piece of code we get three improvements:
 
 - seamless `nil` handling,
 - collection type information - no more casting,
-- less typing and one less (explicit) variable to worry about!
+- less code to achieve same thing, one less (explicit) variable to worry about!
 
 
 ## flatMap
