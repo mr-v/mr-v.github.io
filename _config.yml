@@ -23,7 +23,7 @@ github:
   repo:           https://github.com/mr-v/mr-v.github.io
 pages_list:
   About: '/about'
-  Feed: '/atom.xml'
   Archive: '/archive'
+  Feed: '/atom.xml'
 
 excerpt_separator: <!--more-->
