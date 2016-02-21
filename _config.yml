@@ -9,6 +9,7 @@ relative_permalinks: true
 # Setup
 title:            Adventures in iOS Development
 tagline:          Unit Testing and Clean Code Exploration
+
 url:              https://mr-v.github.io
 paginate:         5
 baseurl:          /
@@ -18,12 +19,13 @@ author:
   email:          witold.skibniewski@gmail.com
 
 # Custom vars
-version:          0.0.1
+version:          0.0.2
 github:
   repo:           https://github.com/mr-v/mr-v.github.io
 pages_list:
-  About: '/about'
+  Toolbox: '/ios-development-toolbox'
   Archive: '/archive'
+  About: '/about'
   Feed: '/atom.xml'
 
 excerpt_separator: <!--more-->
