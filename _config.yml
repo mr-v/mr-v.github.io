@@ -4,7 +4,7 @@ redcarpet:
 
 # Permalinks
 permalink:        pretty
-relative_permalinks: true
+gems: [jekyll-paginate]
 
 # Setup
 title:            Adventures in iOS Development
