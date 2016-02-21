@@ -31,6 +31,10 @@ bloc
 
 [Thorough Markup Formatting Reference from Apple](https://developer.apple.com/library/mac/documentation/Xcode/Reference/xcode_markup_formatting_ref/)
 
+### Other
+
+[Profiling your Swift compilation times](http://irace.me/swift-profiling/)
+
 
 ## Libraries
 
@@ -173,4 +177,6 @@ Great for peeking under the hood of SDK: [introduction](http://www.bartcone.com/
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/modocache">@modocache</a> You can use the <b>⌥⇧X</b> shortcut: it searches all the references to the selector associated to the current method.</p>&mdash; bSr43 (@bSr43) <a href="https://twitter.com/bSr43/status/670662694459043841">November 28, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+## [Macdown](http://macdown.uranusjr.com/)
 
+Markdown editor. Previously used Brackets + extension for this, Macdown works much better.
