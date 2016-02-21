@@ -42,12 +42,6 @@ Checking out libraries:
 
 - [ThisCouldBeUsButYouPlaying](https://github.com/neonichu/ThisCouldBeUsButYouPlaying) - amazing combo of amazing things: Swift playgrounds and open source. Specify libraries you want to play around and get playground with them. Supports both CocoaPods `pod playgrounds RxSwift,RxCocoa` and Carthage `carthage-play Alamofire/Alamofire`.
 
-
-### Parsing JSON
-Objective-C: [KZPropertyMapper](https://github.com/krzysztofzablocki/KZPropertyMapper)
-
-Swift: [Unbox](https://github.com/JohnSundell/Unbox)
-
 ### RxSwift
 
 [RxSwift](https://github.com/ReactiveX/RxSwift) - lots of documentation and playground
@@ -57,6 +51,24 @@ Swift: [Unbox](https://github.com/JohnSundell/Unbox)
 [Functional Reactive Programming with RxSwift (video)](https://realm.io/news/slug-max-alexander-functional-reactive-rxswift/) - another great practical example, this one: chaining async calls.
 
 [RxMarbles](http://rxmarbles.com) - Interactive diagrams of Rx Observables
+
+
+### Other
+
+Parsing JSON:
+
+- Objective-C: [KZPropertyMapper](https://github.com/krzysztofzablocki/KZPropertyMapper)
+
+- Swift: [Unbox](https://github.com/JohnSundell/Unbox) - simple, no weird operators, works as advertised.
+
+
+[Then](https://github.com/devxoul/Then) - "✨ Super sweet syntactic sugar for Swift initializers." True! ✨
+
+[Cartography](https://github.com/robb/Cartography) - "A declarative Auto Layout DSL for Swift" - combines best of both worlds: succint, easy to follow syntax and type safety. Goodbye, VFL!
+
+[OAStackView](https://github.com/oarrabi/OAStackView) - UIStackView goodnes ported back to iOS 7/8.
+
+[R.swift](https://github.com/mac-cain13/R.swift) - "Get strong typed, autocompleted resources like images, fonts and segues in Swift projects"
 
 ## Dependency Management
 
@@ -110,6 +122,10 @@ Tips:
 ^ + [ : jump up
 ^ + ] : jump down
 ```
+
+### Other
+
+[IconOverlaying](https://github.com/krzysztofzablocki/IconOverlaying) - "Build informations on top of your app icon."
 
 # OS X
 
