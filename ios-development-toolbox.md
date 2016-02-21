@@ -1,6 +1,7 @@
 ---
 layout: page
 title: iOS Development Toolbox
+comments: true
 ---
 
 Some things I find useful during everyday work: it may be API design guideline, debugging tool, command-line utility or some cool Xcode plugin.
