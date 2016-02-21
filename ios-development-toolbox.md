@@ -70,7 +70,7 @@ Parsing JSON:
 
 [Cartography](https://github.com/robb/Cartography) - "A declarative Auto Layout DSL for Swift" - combines best of both worlds: succint, easy to follow syntax and type safety. Goodbye, VFL!
 
-[OAStackView](https://github.com/oarrabi/OAStackView) - UIStackView goodnes ported back to iOS 7/8.
+[OAStackView](https://github.com/oarrabi/OAStackView) - UIStackView goodness ported back to iOS 7/8.
 
 [R.swift](https://github.com/mac-cain13/R.swift) - "Get strong typed, autocompleted resources like images, fonts and segues in Swift projects"
 
