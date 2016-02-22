@@ -180,3 +180,7 @@ Great for peeking under the hood of SDK: [introduction](http://www.bartcone.com/
 ## [Macdown](http://macdown.uranusjr.com/)
 
 Markdown editor. Previously used Brackets + extension for this, Macdown works much better.
+
+## Network Link Conditioner
+
+Simulate non-perfect networking conditions and see how app handles it. No need to go to the elevator/basement to get bad signal! [Detailed article from NSHipster](http://nshipster.com/network-link-conditioner/).
