@@ -181,6 +181,6 @@ Great for peeking under the hood of SDK: [introduction](http://www.bartcone.com/
 
 Markdown editor. Previously used Brackets + extension for this, Macdown works much better.
 
-## Network Link Conditioner
+## [Network Link Conditioner](https://developer.apple.com/downloads/?q=Hardware%20IO%20Tools)
 
 Simulate non-perfect networking conditions and see how app handles it. No need to go to the elevator/basement to get bad signal! [Detailed article from NSHipster](http://nshipster.com/network-link-conditioner/).
