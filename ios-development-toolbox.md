@@ -59,7 +59,7 @@ Checking out libraries:
 
 ### Other
 
-Parsing JSON:
+Mapping JSON:
 
 - Objective-C: [KZPropertyMapper](https://github.com/krzysztofzablocki/KZPropertyMapper)
 
@@ -71,8 +71,6 @@ Parsing JSON:
 [Cartography](https://github.com/robb/Cartography) - "A declarative Auto Layout DSL for Swift" - combines best of both worlds: succint, easy to follow syntax and type safety. Goodbye, VFL!
 
 [OAStackView](https://github.com/oarrabi/OAStackView) - UIStackView goodness ported back to iOS 7/8.
-
-[R.swift](https://github.com/mac-cain13/R.swift) - "Get strong typed, autocompleted resources like images, fonts and segues in Swift projects"
 
 ### Dependency Management
 
@@ -151,6 +149,8 @@ Tips:
 ![](https://camo.githubusercontent.com/0a2501433a908cd8c8012a273df6efa26c432939/68747470733a2f2f7261772e6769746875622e636f6d2f676172796265726e68617264742f73656c656374612f6d61737465722f64656d6f2e676966)
 
 I've created alias that combines `tree` and `selecta` to open any file from current directory and its subdirectories: `alias tsof='open "$(tree -if | selecta)"'`.
+
+[joe](https://github.com/karan/joe) - just run `joe swift` and you get yourself a nice gitignore. Basically a command-line wrapper for [github/gitignore](https://github.com/github/gitignore) repo with a few extra features.
 
 ---
 
