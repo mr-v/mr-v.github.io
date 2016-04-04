@@ -104,6 +104,8 @@ Tips:
 ## Xcode
 
 
+[Making Xcode behave](http://useyourloaf.com/blog/making-xcode-behave/) - streamline Xcode's pane management with Behaviors.
+
 ### Xcode Plugins
 
 [Alcatraz](http://alcatraz.io/) - plugins package manager.
