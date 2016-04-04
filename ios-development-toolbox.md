@@ -188,3 +188,7 @@ Markdown editor. Previously used Brackets + extension for this, Macdown works mu
 Simulate non-perfect networking conditions and see how app handles it. No need to go to the elevator/basement to get bad signal! [Detailed article from NSHipster](http://nshipster.com/network-link-conditioner/).
 
 [Designing for Real-World Networks](https://developer.apple.com/library/ios/documentation/NetworkingInternetWeb/Conceptual/NetworkingOverview/WhyNetworkingIsHard/WhyNetworkingIsHard.html).
+
+## [GitUp](http://gitup.co)
+
+Great GUI git client.
