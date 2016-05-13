@@ -83,6 +83,9 @@ Mapping JSON:
 
 [Swift Package Manager](https://swift.org/package-manager) (waiting to use it until Swift 3.0 arrives)
 
+### Misc.
+
+[URL Schemes for Settings](http://forums.macrumors.com/threads/ios-8-widget-customisations-using-launcher.1782093/)
 
 # Tools
 
