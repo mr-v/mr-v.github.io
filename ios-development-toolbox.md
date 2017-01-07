@@ -142,6 +142,8 @@ Tips:
 
 [Provisioning](https://github.com/chockenberry/Provisioning) - "A Quick Look plug-in for .mobileprovision files"
 
+[Preview strings](http://blog.timac.org/?p=933) - QuickLook plugin to preview .strings files
+
 # Terminal
 
 [autojump](https://github.com/wting/autojump) - "A cd command that learns - easily navigate directories from the command line". Using this I can jump quickly to any folder I've visited. Let's say I want to open folder with open source projects: running `j opens` takes me to `~/Developer/open_source` - neat!
