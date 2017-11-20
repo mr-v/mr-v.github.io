@@ -7,16 +7,28 @@ kramdown:
   syntax_highlighter: rouge
 
 # Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
 permalink:        pretty
 gems: [jekyll-paginate]
 
 # Setup
 title:            Adventures in iOS Development
 tagline:          Unit Testing and Clean Code Exploration
+url:                 http://getpoole.com
+baseurl:             ""
+
+# Assets
+#
+# We specify the directory for Jekyll so we can use @imports.
+sass:
+  sass_dir:          _sass
+  style:            :compressed
 
 url:              https://mr-v.github.io
 paginate:         5
-baseurl:          /
+# About/contact
+
 author:
   name:           Witold Skibniewski
   url:            https://github.com/mr-v
