@@ -31,11 +31,11 @@ Steps:
 - In projects top level folder execute command: `pod init`
   - It will create a `Podfile`. Edit it with your text editor of choice and add Nocilla to your test target. In my case test target is named `ServiceTests` and `Podfile` looks like this:
 
-```ruby
+~~~ruby
 target 'ServicesTests' do
   pod 'Nocilla'
 end
-```
+~~~
 
 - To install CocoaPods dependencies call `pod update`. After this projects have to be run from newly created `(project name).xcworkspace`.
 - To use Objective-C code in Swift a bridging header is required. For any libraries you'd like to be visible in Swift add imports to this header.
@@ -45,7 +45,7 @@ end
 ## Test suite setup and testing asynchronous code
 I've created `NocillaTestCase` ([gist](https://gist.github.com/mr-v/fc4c07e0f6d55fe4daae) deriving from `XCTestCase`, to encapsulate all the setup that's needed to be done when testing with Nocilla. Class methods `setUp` and `tearDown` make sure the library is doing the stubbing only during this test suit:
 
-```swift
+~~~swift
 override class func setUp() {
     super.setUp()
     LSNocilla.sharedInstance().start()
@@ -55,23 +55,23 @@ override class func tearDown() {
     super.tearDown()
     LSNocilla.sharedInstance().stop()
 }
-```
+~~~
 
 Stubs get cleared between tests of the suite.
 
-```swift
+~~~swift
 override func tearDown() {
     ...
     LSNocilla.sharedInstance().clearStubs()
 }
-```
+~~~
 
 Due to the fact that "`NSURLSession` API is highly asynchronous" we need to use the new `XCTest` API and setup an expectaction before each test. Expectaction signals that there's async code to be executed. At the end of the test call `waitForExpectationsWithTimeout`, so the function won't return and execute next test. It waits until expectaction is fullfiled (you need to call it manualy in test completion handler) or if it times out. When running tests with Nocilla, timeout can be set to very low values (under 0.1). Even if it fails it's still faster than running a network call - response is almost immediate.
 Add it at the end of the test:
 
-```swift
+~~~swift
 waitForExpectationsWithTimeout(0.1, handler: nil)
-```
+~~~
 
 Passing `nil` to handler is enough for tests to fail in case of timeout. If you need to do any additional work in handler, be sure to check if handlers `NSError` parameter is non `nil` and call `XCTFail` assertion, as handler is invoked both on expectaction fullfilment and timeout.
 
@@ -83,7 +83,7 @@ As each test in a suite will use asynchronous API, `NocillaTestCase` creates new
 After this whole setup (which more or less you'll need to do only once) we're ready to write first tests! 
 I'll use Nocilla to test `WebService` class I created to handle JSON services. First test will check if completion handler is passed right data when server responds with a proper JSON.
 
-```swift
+~~~swift
 func test_fetchParameters_200ProperJSON_CallsCompletionHandlerWithJSONObject() {
     // arrange
     let service = makeJSONWebService(baseURLString: baseURLString, defaultParameters: emptyParameters)
@@ -97,19 +97,19 @@ func test_fetchParameters_200ProperJSON_CallsCompletionHandlerWithJSONObject() {
     }
     waitForExpectationsWithTimeout(0.1, handler: nil)
 }
-```
+~~~
 
 Stubbing is straighforward. Start with `stubRequest` and define HTTP method and URL with either a string or a regex, then define request/response headers, payload, and response status code. In this example tested unit of work is a web service library fetch call. Scenario/state under test is 200 OK response from server with JSON payload. As a result we're expecting completion handler to be called with JSON parsed to dictionary. Other scenarios to test could include handling of the 404 response:
 
-```swift
+~~~swift
 stubRequest("GET", baseURLString).andReturn(404)
-```
+~~~
 
 or testing malformed JSON data reponse:
 
-```swift
+~~~swift
 stubRequest("GET", baseURLString).andReturn(200).withBody("{1}")
-```
+~~~
 
 There are many more examples of stubbing requests with Nocilla's elegant DSL on [github](https://github.com/luisobo/Nocilla#stubbing-requests). Those include even responding with data recorded with `curl` and failing requests with specific `NSError`.
 

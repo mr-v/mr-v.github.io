@@ -7,12 +7,12 @@ comments: true
 
 Enumerations have much [more power](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html) in Swift than in C. For one they are not restricted to integer type, e.g. they can be created with "raw" String value and still be matched in `switch` expression. They can even contain associated values! Canonical example here is `Result`, used for error handling.
 
-```swift
+~~~swift
 enum Result<T, Error: ErrorType> {
     case OK(T)
     case Error(Error)
 }
-```
+~~~
 
 Let's look further than that. Associated value data can be of any type: struct, class, enum or even closure. This opens great possibility for passing around configurations with enum cases.
 
@@ -22,25 +22,25 @@ As an alternative, below is a set of simple guidelines that work both for dealin
 
 <!--more-->
 
-```swift
+~~~swift
 enum ItemCellType {
     case Input(title: String, value: String?, placeholder: String?, inputType: InputType, onInput: InputHandler),
     Selection(title: String, value: () -> String?, options: [String], onSelection: SelectionHandler)
     Switch(title: String, value: Bool?, onValueChange: SwitchHandler)
 }
-```
+~~~
 
 Based on that we can implement a template View Controller (or Factory) producing cells from `ItemCellType` and its configurations. With this at hand, task of creating _Yet Another Form_ becomes much easier: just configure `ItemCellType`s and feed them right to the template View Controller. Plus, when new item type is added, if we played our cards right, compiler will let us know about `switch` that needs to be made exhaustive.
 
 So how to feed those configurations then? Sections of `ItemCellType`s can reside inside of a View Model. Once sections are set up, View Controller can delegate data source methods to View Model via interface like this:
 
-```swift
+~~~swift
 protocol FormViewModelType {
     func numberOfSections() -> Int
     func numberOfItemsInSection(section: Int) -> Int
     func itemCellTypeAtIndexPath(indexPath: NSIndexPath) -> ItemCellType
 }
-```
+~~~
 
 Notice there are no references to UIKit in this protocol. Keeping references to `UIView` classes from View Model, means views can be switched out a little bit easier. Cell implementantions can be replaced at will, without touching logic that drives form. As developers we want to [embrace change](https://vimeo.com/140421667) and changing logic coupled with presentation is a real pain (and vice versa). Having such ViewController/ViewModel structure enables us to just create another View Controller that communicates with `FormViewModelType`. Extra bonus points for User Interface A/B testing possibilities: using protocol allows to iterate over different types of interfaces without doing Big Rewrites. View Model can be used to drive `UITableView` as well as `UICollectionView`.
 
@@ -50,7 +50,7 @@ Closures that handle input are setup in View Model that has access to Model. Tha
 
 Input handling closures also make automated testing of form interaction logic way easier. Does this section collapse when we flip this switch? We just need right `ItemCellType` and interact with it's handler.
 
-```swift
+~~~swift
 func test_extraDataSectionToggle_SwitchOff_ExtraDataSectionIsEmpty {
     let vm: ConcreteFormViewModel = viewModel()
 
@@ -67,11 +67,11 @@ func test_extraDataSectionToggle_SwitchOff_ExtraDataSectionIsEmpty {
     let result = vm.numberOfItemsInSection(inputSection)
     XCTAssertEqual(0, result)
 }
-```
+~~~
 
 Next step is to get View Models's behaviour for "on" state under test. "Act" part of the above test is kinda ugly and obfuscates a little what is actually going on. Similar interaction is needed for the test we're writing next. Looks like a case of [structural duplication](http://mr-v.github.io/custom-error-assertions-in-swift/). We have a passing test, so its structure can be refactored without worrying too much - if something breaks in the process, we'll know right away. Let's extract "act" part to separate method and abstract tapping Extra Data Section Switch to make tests more maintainable. See next test with improved "act" part:
 
-```swift
+~~~swift
 func test_extraDataSectionToggle_SwitchOn_ExtraDataSectionHasThreeItems {
     let vm = viewModel()
 
@@ -94,7 +94,7 @@ private func changeExtraDataSectionSwitch(value value: Bool) {
     }    
     config.onValueChange(value)
 }
-```
+~~~
 
 With this ViewModel setup all interactions and form's "view data" (e.g. titles) can be unit tested without resorting to brittle UI testing. Does this selection contain all of the required options? What happens to model if we pick something? Similar with testing validations or checking that Model passes through the gateway with right configuration, etc. We can get pretty far with `ItemCellType` and no `UIView` in sight!
 

@@ -54,13 +54,13 @@ When pushing a pod with `pod repo push reponame`, `--allow-warnings` can be a li
 ## Updating podspec versions
 Instead of updating podspec manually use a npm package called [podspec-bump](https://www.npmjs.com/package/podspec-bump). To see how podspec file would look after updating patch version, just run the command without any parameters. My preffered way of working is to run `podspec-bump -w` (bumps patch version, writes change to file) and then check changes with quick `git diff`. `-i` switch for bumping major and minor versions is available. There's also `--dump-version`, which can be put to work like [this](http://efcl.info/2014/08/22/cocoapods-podspec-release-tools/):
 
-```bash
+~~~bash
 podspec-bump -w # update version
 git commit -am "bump `podspec-bump --dump-version`" 
 git tag "`podspec-bump --dump-version`"
 git push --tags
 pod trunk push 
-```
+~~~
  
 ## Hey we don't support those languages, do we?
 If you are using libraries that have [lots of localizations](https://github.com/mattt/FormatterKit/tree/master/Localizations) and support languages you don't, you may encounter a problem with App Store displaying that app supports those languages as well. To mitigate it use CocoaPods [cocoapods-prune-localizations plugin](https://github.com/dtorres/cocoapods-prune-localizations), which allows to specify supported language codes in a `Podfile`:
@@ -72,7 +72,7 @@ On each install/update those unwanted localizations will be pruned. Aside from f
 ## Defining macro in a third party dependency
 Macros can be great, macros can be bad. In the end it boils down to how you use them. In my case I needed to add support for `ARAnalytics` to `AFNetworkActivityLogger`. Figured out a way to do it in a quick and dirty fashion (switching `NSLog` calls in `AFNetworkActivityLogger` to `ARLog`). Following [Stack Overflow advice](http://stackoverflow.com/a/27138078) it can be achieved by adding `post_install` hook to a `Podfile`:
  
-```ruby
+~~~ruby
 post_install do |installer_representation|
   installer_representation.project.targets.each do |target|
       target.build_configurations.each do |config|
@@ -88,4 +88,4 @@ post_install do |installer_representation|
       end
     end
 end
-```
+~~~

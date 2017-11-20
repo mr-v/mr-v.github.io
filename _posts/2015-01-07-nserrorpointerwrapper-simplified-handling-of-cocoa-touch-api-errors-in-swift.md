@@ -14,7 +14,7 @@ Dealing with `NSError` in Objective-C is clunky at best. You have to create a va
 
 Standard way of handling error in Cocoa Touch API in Objective-C looks like this:
 
-```objc
+~~~objc
 NSError *error = nil;
 id result = [object methodWithParameter: parameter, error: &error];
 if (result) {
@@ -22,11 +22,11 @@ if (result) {
 } else {
   // handle error
 }
-```
+~~~
 
 This is quite a lot of boilerplate code to write/read each time. In Objective-C when result is `nil` it fails the test as if you've passed `false`. Swift is very strict about implicit conversions and you need to make sure whether you're getting a `Bool` or some variation of `AnyObject`, and handle it accordingly.
 
-```swift
+~~~swift
 var error: NSError?
 var result: AnyObject? = methodWithParameter(parameter: parameter, error: &error)
 if let unwrapped = result {
@@ -34,24 +34,24 @@ if let unwrapped = result {
 } else {
   // handle error
 }
-```
+~~~
 
 To reduce the need to write the same code over and over, I've created a wrapper for calls that need to take in  `NSErrorPointer`. `tryWithErrorPointer` function takes in closure with a single `NSErrorPointer` argument. Sample usage:
 
-```swift
+~~~swift
 tryWithErrorPointer({ (error: NSErrorPointer) -> Void in
     methodWithParameter(parameter: parameter, error: error) })
-```
+~~~
 
 Using closure syntax goodness you can end up with a simplified call that looks like this:
 
-```swift
+~~~swift
 tryWithErrorPointer { methodWithParameter(parameter: parameter, error: $0) }
-```
+~~~
 
 where `$0` is a shorthand argument name for the `NSErrorPointer`. OK, that pesky `error` variable is gone, but what about handling success and error? You can nicely chain handling of both cases. You can omit any of the handlers as you wish ([example from demo app](https://github.com/mr-v/swift-objc.io-issue-10-core-data-network-application/commit/d881a79126957079c5099efc32ddafd9d10427a1#diff-d11b34ffbe4581d0b14763b5b452fae3L26)).
 
-```swift
+~~~swift
 tryWithErrorPointer { methodWithParameter(parameter: parameter, error: $0) }
 	.onSuccess{ result in 
 	  // do something
@@ -59,18 +59,18 @@ tryWithErrorPointer { methodWithParameter(parameter: parameter, error: $0) }
 	.onError{ error in
 	  // handle error, log, call abort during development stages, etc.
 	}
-```
+~~~
 
 Autocompletion tips us about the handlers and you have less code to write by hand.
 Often you need to cast the result to the expected type, since you can't do much with `AnyObject`. Casting is just another thing that can go wrong. Here's a version of `tryWithErrorPointer` that in addition takes in type you'd like to downcast to<sup id="fnref:1">
         <a href="#fn:1" rel="footnote">1</a>
 	    </sup>. In case casting fails error in `onError` handler has `NSErrorPointerWrapperFailedDowncast` error code.
 	    
-```swift
+~~~swift
 tryWithErrorPointer(castResultTo: NSDictionary.self) { NSJSONSerialization.JSONObjectWithData(JSONData, options: nil, error: $0) }
     .onError{ _ in XCTFail() }
     .onSuccess{ XCTAssertNotNil($0); return }
-```
+~~~
 
 `tryWithErrorPointer` wrapper helps to focus only on the code that's specific to current use case and forget the boilerplate. I think it also reads much better than the standard error handling.
 

@@ -20,25 +20,25 @@ Most straightforward way to integrate both Hockey App and Google Analytics would
 
 1. Add references to the subspecs in Podfile
 
-```ruby
+~~~ruby
 pod 'ARAnalytics', :subspecs => ['HockeyApp', 'GoogleAnalytics']
-```
+~~~
 
 2. Setup API keys
 
-```objc
+~~~objc
 [ARAnalytics setupWithAnalytics: @{
       ARHockeyAppBetaID : @"KEY",
       ARGoogleAnalyticsID : @"KEY"
    }];
-```
+~~~
 
 and it's good to go. This is nice to have, but the selling point of ARAnalytics is its DSL.
 
 ## Tracking events with DSL
 DSL support helps with cleaning up the code even more and gives a lot of flexibility. User interactions can be tracked without cluttering view controller code. After adding `ARAnalytics/DSL` subspec, new setup method is available: `+[ARAnalytics setupWithAnalytics:configuration:]`. New parameter is a dictonary that takes in configuration for tracking events and screens. For the `ARAnalyticsTrackedEvents` key pass an array of tracked event details for each class. Let's setup a few events for `DetailViewController` and `MasterViewController` classes.
 
-```objc
+~~~objc
 - (NSDictionary *)analyticsConfiguration {
     return @{ARAnalyticsTrackedEvents: @[
                      @{ARAnalyticsClass: DetailViewController.class,
@@ -51,11 +51,11 @@ DSL support helps with cleaning up the code even more and gives a lot of flexibi
                      ]
              };
 }
-```
+~~~
 
 Simply set event's name and refer to the selector that triggers logging. I admit that all the prefixes and different brackets can obscure what's actually going on here. Will do a little refactoring to clean this up:
 
-```objc
+~~~objc
 - (NSDictionary *)analyticsConfiguration {
     return @{ARAnalyticsTrackedEvents: @[[self masterViewControllerTrackedEvents],
                                          [self detailViewControllerTrackedEvents]]};
@@ -75,7 +75,7 @@ Simply set event's name and refer to the selector that triggers logging. I admit
                      @{ARAnalyticsEventName: @"save", ARAnalyticsSelectorName: ARAnalyticsSelector(save) }
                      ]};
 }
-```
+~~~
 
 Now it reads much better. `analyticsConfiguration` has high level overview of what is tracked. For details of specific class developer can go level below to methods encapsulating events for each class. This has additional benefit of being able to quickly answer whether something is tracked or not, without searching through the view controllers.
 
@@ -83,7 +83,7 @@ Now it reads much better. `analyticsConfiguration` has high level overview of wh
 Let's compare how ARAnalytics and Google Analytics SDK differ in aspect of tracking screen views. Google Analytics SDK requires developer to add this all over the app: `[[GAI sharedInstance] defaultTracker] set:kGAIScreenName value:@"Home Screen"];`. As we've already established sprinkling codebase with analytics calls can be avoided. Google provides way for automatic screen measurement within its SDK. Just change all the view controllers in the app to inherit from `GAITrackedViewController`. Wait a sec. That's quite a dependency! Not to mention - how do we track third party screen views? By hand? No, thanks!
 Here's where ARAnalytics really starts to shine. All screens can be tracked with the following code.
 
-```objc
+~~~objc
 - (NSDictionary *)analyticsConfiguration {
     return @{ARAnalyticsTrackedEvents: @[[self masterViewControllerTrackedEvents],
                                          [self detailViewControllerTrackedEvents]],
@@ -97,11 +97,11 @@ Here's where ARAnalytics really starts to shine. All screens can be tracked with
                                               }
                                           ]};
 }
-```
+~~~
 
 All screen views will be automatically logged now. No matter if it's our code, third party library or system framework. What's pretty cool is that developer doesn't need to remember about logging views when adding a new screen. It will just work. However `title` may not always be set and I want view controller's specific class to be logged.
 
-```objc
+~~~objc
 @implementation UIViewController (ClassName_tvx)
 - (NSString *)className_tvx {
     return NSStringFromClass([self class]);
@@ -117,10 +117,10 @@ All screen views will be automatically logged now. No matter if it's our code, t
                                               }
                                           ]};
 }
-```
+~~~
 With help of a small category a class name now gets logged. To weed out `UINavigationController`, `UITabBarController` and alike, for `ARAnalyticsShouldFire` key add block that filters unwanted values.
 
-```objc
+~~~objc
 - (NSDictionary *)trackedScreens {
     NSArray *ignoredClasses = @[[UINavigationController class], [UITabBarController class]];
     return @{ARAnalyticsClass: UIViewController.class,
@@ -135,16 +135,16 @@ With help of a small category a class name now gets logged. To weed out `UINavig
                                      }}]
              };
 }
-```
+~~~
 
 ## Enhancing Hockey App crash logs
 Now for the cherry on the top. ARAnalytics works especially well with HockeySDK. All the data that is sent to analytics services can be attached to crash logs! Having such breadcrumbs is a blessing, especially when stack trace doesn't say much and you can't reproduce the crash. With this help developers can retrace user's steps and have better chance of improving app's stability. I recommend including other information that's useful for the debugging: app's lifecycle events, going offline/online, and network calls. To add custom debug data use library's own logger `ARLog`:
 
-```objc
+~~~objc
 - (void)logAppLifecycleEvent:(NSNotification *)notification {
     ARLog(@"lifecycle event: %@", notification);
 }
-```
+~~~
 
 Extra data is avaialbe in Description tab of Hockey crash logs. Note: not all logs will contain description due to implementation:
 >  (...) `syslogd` will not keep logs around for a long time, as such you should only expect logs of people that re-start the application immediately after the application crashing.

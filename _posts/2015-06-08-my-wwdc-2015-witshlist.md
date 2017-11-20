@@ -12,7 +12,7 @@ WWDC is about to start in 9 hours. Here's my modest wishlist:
  - `Result` enum - everybody have been blogging and talking about it for the last year, plus Rust has [it](http://doc.rust-lang.org/std/result/enum.Result.html),
  - `await` and `async` keywords - we are closely catching up on JavaScript's 10+ different ways of doing async stuff. It's such a big part of our work, that support for it should be baked into the language/compiler. See how nice it is in [C#](https://msdn.microsoft.com/en-us/library/hh191443.aspx):
  
- ```c#
+ ~~~c#
   public partial class MainWindow : Window
   {
     // Mark the event handler with async so you can use await in it. 
@@ -64,6 +64,6 @@ WWDC is about to start in 9 hours. Here's my modest wishlist:
         resultsTextBox.Text += "Working . . . . . . .\r\n";
     }
 }
- ```
+ ~~~
 
  List may be short, but those features are essential and would make our life easier. With them in place we could place more focus on solving interesting problems.

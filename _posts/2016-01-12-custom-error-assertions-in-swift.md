@@ -7,7 +7,7 @@ comments: true
 
 Swift 2 introduced revamped error handling <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. Unfortunately XCTest framework has not been updated for this occasion. Without any custom libraries developers are stuck with tests like those:
 
-```swift
+~~~swift
 func test_throwOnUnkown_UnknownPassed_ThrowsAnyError() {
     do {
         try Movie().throwOnUnkown(.Unkown)
@@ -38,11 +38,11 @@ func test_throwOnUnkown_UnknownPassed_ThrowsIllegalArgument() {
         XCTAssertEqual(TestError.IllegalArgument, error)
     }
 }
-```
+~~~
 
 Example is very rudimentary, however those tests still read badly. Wouldn't [this alternative](https://github.com/mr-v/AssertThrows) be much nicer?
 
-```swift
+~~~swift
 func test_throwOnUnkown_UnknownPassed_ThrowsAnyError() {
     let movie = Movie()
     AssertThrows(try movie.throwOnUnkown(.Unkown))
@@ -57,7 +57,7 @@ func test_throwOnUnkown_UnknownPassed_ThrowsIllegalArgument() {
     let movie = Movie()
     AssertThrows(TestError.IllegalArgument, try movie.throwOnUnkown(.Unkown))
 }
-```
+~~~
 
 So how to get rid of unwieldy tests from first example and arrive at second solution?
 
@@ -69,19 +69,19 @@ First one is to use [Arrange-Act-Assert](http://c2.com/cgi/wiki?ArrangeActAssert
 
 For contrast let's take excerpt from the first example:
 
-```swift
+~~~swift
 do {
     try Movie().throwOnUnkown(.Unkown)
     XCTFail()
 } catch {
 }
-```
+~~~
 
 Here the test passes if control goes to empty catch block - not very intuitive, there's something off about it.
 
 Another good advice is to have only single assertion per test.
 
-```swift
+~~~swift
 func test_throwOnUnkown_UnknownPassed_ThrowsIllegalArgument() {
     do {
         try Movie().throwOnUnkown(.Unkown)
@@ -93,7 +93,7 @@ func test_throwOnUnkown_UnknownPassed_ThrowsIllegalArgument() {
         XCTAssertEqual(TestError.IllegalArgument, error)
     }
 }
-```
+~~~
 
 Method above includes three (!) assertions - in larger tests much time can be spent on assessing  conditions for test to pass, since there are multiple points of failure. We just want to test a single thing! It's also easy to imagine that one `XCTFail` call may be lost during editing or copying/pasting (tests with cumbersome structure encourage such behaviour). We may end up with false positive test then, at best we will discover this and loose our trust in test suite.
 
@@ -113,13 +113,13 @@ Following tests make sense for throwing function in Swift:
 
 Ideally we want to test expected behaviour in a single line.
 
-```swift
+~~~swift
 AssertThrows(TestError.IllegalArgument, try movie.throwsOnUnknown(.Unknown))
-```
+~~~
 
 Let's once again take a look at verbose version, as it will be starting point for implementing  `AssertThrows` for the third case.
 
-```swift
+~~~swift
 func test_throwOnUnkown_UnknownPassed_ThrowsIllegalArgument() {
     do {
         try Movie().throwOnUnkown(.Unkown)
@@ -131,11 +131,11 @@ func test_throwOnUnkown_UnknownPassed_ThrowsIllegalArgument() {
         XCTAssertEqual(TestError.IllegalArgument, error)
     }
 }
-```
+~~~
 
 Swift provides us with great tools to change this specific piece of code into generalized assertion. It's still similar in structure, but will be hidden behind nice, single line `AssertThrows` call. It can be tested, so if something fails we know custom assertion is rock solid and the issue lies with the new code we've just written. See implementation below.
 
-```swift
+~~~swift
 public func AssertThrows<T where T: Equatable, T: ErrorType>(expected: T, @autoclosure _ throwingCall: () throws -> (), file: String = __FILE__, line: UInt = __LINE__) {
     do {
         try throwingCall()
@@ -146,7 +146,7 @@ public func AssertThrows<T where T: Equatable, T: ErrorType>(expected: T, @autoc
         }
     }
 }
-```
+~~~
 
 Just a few lines of code, but they greatly clean up error testing codebase. Sketchy looking logic is buried deep in `AssertThrows` implementation, we no longer need to remember it and watch our step. As mentioned, adding [a few simple tests](https://github.com/mr-v/AssertThrows/tree/master/AssertThrowsTests) of `AssertThrows` provides a safety net to ensure that assertion itself works as advertised.
 

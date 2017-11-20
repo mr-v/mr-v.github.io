@@ -19,9 +19,9 @@ For the first year of Swift developers were using different workarounds to test 
 
 With Swift 2 this was solved by introducing `@testable` attribute. To be able to use it, app target needs testability enabled, see `App Target -> Build Settings -> Build Options -> Enable Testability`. In projects created with Xcode 7 it's on by default. Double check `Product Module Name` and use it to import app target in test case:
 
-```swift
+~~~swift
 @testable import AwardWinningApp
-```
+~~~
 
 Now all internal entities of `AwardWinningApp` module are available inside test target. Simple solution, no workarounds needed.
 
@@ -34,7 +34,7 @@ But that's Objective-C, how to do this in Swift? In the comments Paul Booth shar
 
 > Comment out @UIApplicationMain in AppDelegate.swift
 
-```swift
+~~~swift
 // TestingAppDelegate.swift
 import UIKit
 
@@ -53,7 +53,7 @@ if isRunningTests {
 } else {
     UIApplicationMain(C_ARGC, C_ARGV, nil, NSStringFromClass(AppDelegate))
 }
-```
+~~~
 
 That works in Xcode 6.4/Swift 1.2. We're getting closer. But whoah, what's this `main.swift`?! _Swift Programming Language_ answers this:
 
@@ -67,7 +67,7 @@ In Xcode 7 some things got moved around and test target module is not loaded whe
 
 With those changes and Swift 2 updates, I've arrived at bare minimum implementation for stubbing app delegate for tests:
 
-```swift
+~~~swift
 import UIKit
 
 private func delegateClassName() -> String? {
@@ -75,7 +75,7 @@ private func delegateClassName() -> String? {
 }
 
 UIApplicationMain(Process.argc, Process.unsafeArgv, nil, delegateClassName())
-```
+~~~
 
 That's nice.
 
