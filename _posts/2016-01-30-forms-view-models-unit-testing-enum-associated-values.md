@@ -44,8 +44,7 @@ protocol FormViewModelType {
 
 Notice there are no references to UIKit in this protocol. Keeping references to `UIView` classes from View Model, means views can be switched out a little bit easier. Cell implementantions can be replaced at will, without touching logic that drives form. As developers we want to [embrace change](https://vimeo.com/140421667) and changing logic coupled with presentation is a real pain (and vice versa). Having such ViewController/ViewModel structure enables us to just create another View Controller that communicates with `FormViewModelType`. Extra bonus points for User Interface A/B testing possibilities: using protocol allows to iterate over different types of interfaces without doing Big Rewrites. View Model can be used to drive `UITableView` as well as `UICollectionView`.
 
-Implementations of `FormViewModelType` can contain specific code for model updates, validation, passing data to services via [gateway](http://blog.cleancoder.com/uncle-
-bob/2016/01/04/ALittleArchitecture.html) (be it REST API or local storage), etc.
+Implementations of `FormViewModelType` can contain specific code for model updates, validation, passing data to services via [gateway](http://blog.cleancoder.com/uncle-bob/2016/01/04/ALittleArchitecture.html) (be it REST API or local storage), etc.
 
 Closures that handle input are setup in View Model that has access to Model. Thanks to this reading from/writing to Model is "local" and additional mapping between Model properties and index paths can be avoided - it's especially helpful in case when static form is long and has many different types of input.
 
